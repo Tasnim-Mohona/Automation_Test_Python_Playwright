@@ -15,6 +15,3 @@ class MainPage(BasePage):
             link_name: Enum value from MainPageNavigation
         """
         self._navigation_links.filter(has_text=link_name.value).first.click()
-
-
-
