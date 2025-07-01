@@ -2,7 +2,7 @@ import pytest
 
 from configs.settings import TEST_APP_URL
 from framework.ui.browser.browser import Browser
-from framework.ui.constants.MainPageNavigation import MainPageNavigation
+from framework.constants.MainPageNavigation import MainPageNavigation
 from framework.ui.pages.add_remove_page import AddRemovePage
 from framework.ui.pages.main_page import MainPage
 

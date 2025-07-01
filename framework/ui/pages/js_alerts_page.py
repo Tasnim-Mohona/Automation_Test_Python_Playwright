@@ -11,7 +11,7 @@ class JavaScriptAlertsPage(BasePage):
         header_locator = page.locator('h3:has-text("Javascript Alerts")')
         super().__init__(page, header_locator, name="JavaScript Alerts Page")
 
-        self._js_alert_button = Button(page, page.locator('[onclick *= "jsAlert()"]'), name="Click for JS Alert Button")
+        self._js_alert_button = Button(page, page.locator('[onclick *= "jsAlert()"]'), name="Click for JS Alert")
         self._result_message_lbl = Label(page, page.locator('#result'), name="Result TextBox")
 
     @step('Click the JS Alert button')

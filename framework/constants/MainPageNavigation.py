@@ -11,6 +11,7 @@ class MainPageNavigation(Enum):
     FILE_UPLOAD = "File Upload"
     BASIC_AUTH = "Basic Auth"
     Add_REMOVE_ELEMENTS_PAGE = "Add/Remove Elements"
+    MULTIPLE_WINDOWS = "Multiple Windows"
 
     @property
     def label(self) -> str:
