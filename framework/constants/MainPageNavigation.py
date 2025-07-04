@@ -12,6 +12,7 @@ class MainPageNavigation(Enum):
     BASIC_AUTH = "Basic Auth"
     Add_REMOVE_ELEMENTS_PAGE = "Add/Remove Elements"
     MULTIPLE_WINDOWS = "Multiple Windows"
+    CHECKBOX = "Checkboxes"
 
     @property
     def label(self) -> str:

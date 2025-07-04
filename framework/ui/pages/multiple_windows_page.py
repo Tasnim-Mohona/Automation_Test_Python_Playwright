@@ -2,7 +2,6 @@ import logging
 
 from playwright.async_api import Page
 
-from framework.ui.decorators.decorators import step
 from framework.ui.elements.button import Button
 from framework.ui.pages.base_page import BasePage
 

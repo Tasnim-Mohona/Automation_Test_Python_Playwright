@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 
-from framework.ui.constants.MainPageNavigation import MainPageNavigation
+from framework.constants import MainPageNavigation
 from framework.ui.pages.base_page import BasePage
 
 
