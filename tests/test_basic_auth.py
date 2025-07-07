@@ -17,8 +17,7 @@ class TestBasicAuth:
 
         main_page = MainPage(browser.page)
         main_page.click_navigation_link(MainPageNavigation.BASIC_AUTH)
-
-        basic_auth_page = BasicAuthPage(browser.page)
+        basic_auth_page = BasicAuthPage(browser.dialog.page)
+        basic_auth_page.wait_for_page_to_load()
         text = basic_auth_page.get_auth_message()
-
         assert text.startswith(SUCCESS_AUTH_MSG), f"Expected text message '{SUCCESS_AUTH_MSG}', but got '{text}'"

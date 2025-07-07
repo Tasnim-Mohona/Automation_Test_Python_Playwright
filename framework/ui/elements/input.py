@@ -47,4 +47,3 @@ class Input(BaseElement):
             return
 
         self.locator.fill(text) if clear else self.locator.type(text)
-

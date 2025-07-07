@@ -73,7 +73,7 @@ def browser(request):
 
 @pytest.fixture(scope="module")
 def set_basic_auth(browser: Browser, test_config: Dict[str, str]) -> None:
-    user = get_config_value(test_config, key="user", required=True)
+    user = get_config_value(test_config, key="username", required=True)
     password = get_config_value(test_config, key="password", required=True)
     browser.set_basic_authentication(user, password)
 
