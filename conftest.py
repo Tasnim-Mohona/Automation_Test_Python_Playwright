@@ -2,7 +2,7 @@ import json
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Any
 
 import pytest
 from playwright.sync_api import sync_playwright
@@ -104,3 +104,40 @@ def file_for_upload(test_config: Dict[str, str]) -> Path:
     if not file_path.is_file():
         raise FileNotFoundError(f"File for upload not found: {file_path}")
     return file_path
+
+
+@pytest.fixture()
+def download_dir(test_config: Dict[str, Any]) -> Path:
+    """
+    Fixture to get and resolve the download directory path.
+
+    Args:
+        test_config: Dictionary containing test configuration
+
+    Returns:
+        Path: Resolved path to download directory
+    """
+    download_dir = get_config_value(test_config, key="download_dir", default=DEFAULT_DOWNLOAD_DIR)
+    return Path(download_dir).resolve()
+
+
+@pytest.fixture
+def cleanup_download_dir(download_dir: Path) -> Path:
+    """
+    Fixture to ensure clean download directory before and after test.
+
+    Args:
+        download_dir: Path to the download directory
+
+    Yields:
+        Path: The download directory path
+
+    Ensures:
+        Directory is cleaned before and after test execution
+    """
+    file_utils.remove_dir_if_exists(download_dir)
+    try:
+        yield download_dir
+    finally:
+        file_utils.remove_dir_if_exists(download_dir)
+        logging.info(f"Download directory cleaned: {download_dir}")
