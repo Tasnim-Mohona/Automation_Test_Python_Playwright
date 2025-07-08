@@ -88,3 +88,19 @@ def test_config(request) -> dict[str, str]:
     except FileNotFoundError:
         raise Exception(f"Configuration file not found at : {config_path}")
     return data
+
+
+@pytest.fixture
+def test_file_name(test_config: Dict[str, str]) -> str | None:
+    return get_config_value(test_config, key="download_file_name")
+
+
+@pytest.fixture()
+def file_for_upload(test_config: Dict[str, str]) -> Path:
+    file_name = get_config_value(test_config, key="file_for_upload", default=DEFAULT_TEST_FILE)
+    resource_dir = get_config_value(test_config, key="source_dir", default=DEFAULT_RESOURCE_DIR)
+    file_path = Path(resource_dir, file_name).resolve()
+
+    if not file_path.is_file():
+        raise FileNotFoundError(f"File for upload not found: {file_path}")
+    return file_path

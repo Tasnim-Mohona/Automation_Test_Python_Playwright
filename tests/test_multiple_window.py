@@ -16,6 +16,9 @@ class TestMultipleWindow:
         main_page.click_navigation_link(MainPageNavigation.MULTIPLE_WINDOWS)
 
         multiple_window_page = WindowHandlePage(browser.page)
-        multiple_window_page.open_and_switch_to_new_tab()
         new_window_page = NewWindowPage(browser.page)
+
+        multiple_window_page.open_and_switch_to_new_tab()
+        browser.wait_for_delay(500)
+        new_window_page.wait_for_page_to_load()
         assert new_window_page.is_page_open(), "New Window Page did not open successfully"

@@ -1,7 +1,13 @@
+from typing import re
+
 import pytest
 from playwright.sync_api import Page
 
 from configs.settings import TEST_APP_URL
+from framework.constants.MainPageNavigation import MainPageNavigation
+from framework.ui.browser.browser import Browser
+from framework.ui.pages.data_tables_page import DataTablesPage
+from framework.ui.pages.main_page import MainPage
 
 EXPECTED_DUE_VALUE = 251.00
 CURRENCY_SYMBOL = "$"
@@ -11,22 +17,16 @@ CURRENCY_REGEX = r"[^\d.]"
 @pytest.mark.data_tables
 class TestDataTables:
 
-    def test_data_table(self, page: Page):
+    def test_data_table(self, browser: Browser):
         print("Test Started 🚀")
-        page.goto(TEST_APP_URL)
-        page.locator('[href="/tables"]').click()
-        due_column_locator = "xpath = //*[@id = 'table1']//td[4]"
+        browser.open_url(TEST_APP_URL)
 
-        page.wait_for_selector(due_column_locator)
-        due_elements = page.locator(due_column_locator).all()
+        main_page = MainPage(browser.page)
+        main_page.click_navigation_link(MainPageNavigation.SORTABLE_DATA_TABLES)
 
-        print(f"Row Count: {due_elements}")
-        total_sum = 0
+        data_tables_page = DataTablesPage(browser.page)
+        table1_content = data_tables_page.get_table1_content()
 
-        for element in due_elements:
-            text = element.inner_text()
-            clean_value = float(re.sub(CURRENCY_REGEX, ", text"))
-            total_sum += clean_value
-
-        print(f"Total Due Value: {CURRENCY_SYMBOL}{total_sum}")
-        assert total_sum == EXPECTED_DUE_VALUE, f"Expected total due value to be {EXPECTED_DUE_VALUE}, but got {total_sum}"
+        total_due = data_tables_page.get_total_due_value(table1_content)
+        assert total_due == EXPECTED_DUE_VALUE, \
+            f"Expected total due value to be {EXPECTED_DUE_VALUE}, but got {total_due}"
